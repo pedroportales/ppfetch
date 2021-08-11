@@ -1,0 +1,47 @@
+#!/bin/sh
+. /etc/os-release
+
+# Taken fron pfetch
+if `xprop -version > /dev/null 2>&1` ; then
+	id=$(xprop -root -notype _NET_SUPPORTING_WM_CHECK)
+	id=${id##* }
+	wm=$(xprop -id "$id" -notype -len 25 -f _NET_WM_NAME 8t)
+	wm=${wm##*_NET_WM_NAME = \"}
+	wm=${wm%%\"*}
+fi
+
+# Var Colors
+GREEN='\033[32;01m'
+YELLOW='\033[33;01m'
+RED='\033[1;31m'
+BLUE='\033[34;01m'
+PURPLE='\033[35m'
+NORMAL='\033[0m'
+
+# Structure Vars
+host=" $PURPLE$USER$NORMAL@$BLUE$(cat /etc/hostname)$NORMAL"
+line=" ─────────────────────"
+os="$RED os:$NORMAL $PRETTY_NAME"
+kernel="$BLUE kernel:$NORMAL $(uname -r)"
+shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
+wm_name="$GREEN wm:$NORMAL ${wm:-none}"
+
+pad="[13G"
+
+printf "            $host\n"
+printf "   (\_/)    $line\n"
+printf " __(. .)__  $os\n"
+printf " \__|_|__/  $kernel\n"
+printf "    / \     $shell\n"
+printf "            $wm_name\n\n"
+printf " Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL\n"
+
+#cat << EOF
+#${pad}$BLUE$host
+#   (\_/) ${pad}$NORMAL$line
+# __(. .)__ ${pad}$PURPLE$os$NORMAL
+# \__|_|__/ ${pad}$RED$kernel$NORMAL
+#    / \ ${pad}$GREEN$shell$NORMAL
+#${pad}$YELLOW$wm_name
+#EOF
+
