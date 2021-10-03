@@ -9,17 +9,9 @@ If you are a user of Arch Linux based, can install ppfetch with a AUR helper suc
 yay -Sy ppfetch-git
 ```
 
-To install ppfetch in another distro, first go to the `/usr/bin/` and later make download of ppfetch:
-
-```
-$ cd /usr/bin/
-```
-```
-# wget -c https://gitlab.com/pedro.portales/ppfetch/-/raw/master/ppfetch
-```
-Now, enter this command:
-```
-# chmod +x ppfetch
+To install ppfetch in another distro, download the installer script:
+```sh
+curl https://raw.githubusercontent.com/pedroportales/ppfetch/main/install.sh | sudo sh
 ```
 Thanks for use ppfetch!
 
