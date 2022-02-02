@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 . /etc/os-release
 
 # Taken fron pfetch
@@ -21,7 +21,7 @@ NORMAL='\033[0m'
 # Structure Vars
 host=" $PURPLE$USER$NORMAL@$BLUE$(cat /etc/hostname)$NORMAL"
 chars=$(echo $USER@$(cat /etc/hostname) | wc -m)
-charsf=$(linef=$(printf "%${chars}s");echo ${linef// /─})
+charsf=$(printf "%${chars}s" | sed -r 's/\s/─/g')
 line=$(echo $charsf | awk '{ print substr( $0, 1, length($0)-1 ) }')
 
 os="$RED os:$NORMAL $PRETTY_NAME"
