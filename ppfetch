@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 . /etc/os-release
 
 # Taken fron pfetch
@@ -19,8 +19,14 @@ PURPLE='\033[35m'
 NORMAL='\033[0m'
 
 # Structure Vars
-host=" $PURPLE$USER$NORMAL@$BLUE$(cat /etc/hostname)$NORMAL"
-chars=$(echo $USER@$(cat /etc/hostname) | wc -m)
+if [ -f /etc/conf.d/hostname ]; then
+	. /etc/conf.d/hostname
+	host=" $PURPLE$USER$NORMAL@$BLUE$hostname$NORMAL"
+	chars=$(echo $USER@$hostname | wc -m)
+else
+	host=" $PURPLE$USER$NORMAL@$BLUE$(cat /etc/hostname)$NORMAL"
+	chars=$(echo $USER@$(cat /etc/hostname) | wc -m)
+fi
 charsf=$(printf "%${chars}s" | sed -r 's/\s/─/g')
 line=$(echo $charsf | awk '{ print substr( $0, 1, length($0)-1 ) }')
 
