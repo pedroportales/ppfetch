@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 . /etc/os-release
 
 # Taken fron pfetch
@@ -18,30 +18,31 @@ BLUE='\033[34;01m'
 PURPLE='\033[35m'
 NORMAL='\033[0m'
 
+# Set USER and HOSTNAME for non-bash shells
+: "${USER=$(id -un)}${HOSTNAME=$(uname -n)}"
+
 # Structure Vars
-if [ -f /etc/conf.d/hostname ]; then
-	. /etc/conf.d/hostname
-	host=" $PURPLE$USER$NORMAL@$BLUE$hostname$NORMAL"
-	chars=$(echo $USER@$hostname | wc -m)
-else
-	host=" $PURPLE$USER$NORMAL@$BLUE$(cat /etc/hostname)$NORMAL"
-	chars=$(echo $USER@$(cat /etc/hostname) | wc -m)
-fi
-charsf=$(printf "%${chars}s" | sed -r 's/\s/─/g')
-line=$(echo $charsf | awk '{ print substr( $0, 1, length($0)-1 ) }')
+host=" $PURPLE$USER$NORMAL@$BLUE$HOSTNAME$NORMAL"
+chars=$(echo "$USER@$HOSTNAME" | wc -m)
+# Draw line
+line=''; i=0
+while [ "$((i+=1))" -lt "$chars" ]; do
+	line="${line}─"
+done
 
 os="$RED os:$NORMAL $PRETTY_NAME"
 kernel="$BLUE kernel:$NORMAL $(uname -r)"
 shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
 wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
-printf "            $host\n"
-printf "   (\_/)     $line\n"
-printf " __(. .)__  $os\n"
-printf " \__|_|__/  $kernel\n"
-printf "    / \     $shell\n"
-printf "            $wm_name\n\n"
-printf " Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL\n"
+printf "%s %b\n" \
+	"           " "$host" \
+	"   (\_/)   " " $line" \
+	" __(. .)__ " "$os" \
+	" \__|_|__/ " "$kernel" \
+	"    / \    " "$shell" \
+	"           " "$wm_name\n" \
+	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
 
 #pad="[13G"
 #cat << EOF
