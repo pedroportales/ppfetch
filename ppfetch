@@ -37,10 +37,10 @@ wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
 printf "%s %b\n" \
 	"           " "$host" \
-	"   (\_/)   " " $line" \
-	" __(. .)__ " "$os" \
-	" \__|_|__/ " "$kernel" \
-	"    / \    " "$shell" \
+	"  __   __  " " $line" \
+	" (  \,/  ) "  "$os" \
+	"  \_ | _/  "  "$kernel" \
+	"  (_/ \_)  " "$shell" \
 	"           " "$wm_name\n" \
 	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
 
