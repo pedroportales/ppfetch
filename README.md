@@ -18,7 +18,7 @@ emerge -av ppfetch
 
 To install ppfetch in another distro, download the installer script:
 ```sh
-curl https://raw.githubusercontent.com/pedroportales/ppfetch/main/install.sh | sudo sh
+curl https://raw.githubusercontent.com/pedroportales/ppfetch/main/install.sh | sh
 ```
 Thanks for use ppfetch!
 
