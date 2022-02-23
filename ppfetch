@@ -30,11 +30,14 @@ while [ "$((i+=1))" -lt "$chars" ]; do
 	line="${line}─"
 done
 
+# get a value between 1 and 2
+randomv=$(shuf -i 1-2 -n 1)
 os="$RED os:$NORMAL $PRETTY_NAME"
 kernel="$BLUE kernel:$NORMAL $(uname -r)"
 shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
 wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
+if [ $randomv = 2 ];then
 printf "%s %b\n" \
 	"           " "$host" \
 	"  __   __  " " $line" \
@@ -43,6 +46,16 @@ printf "%s %b\n" \
 	"  (_/ \_)  " "$shell" \
 	"           " "$wm_name\n" \
 	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+else
+	printf "%s %b\n" \
+	"           " "$host" \
+	"   (\_/)   " " $line" \
+	" __(. .)__ " "$os" \
+	" \__|_|__/ " "$kernel" \
+	"    / \    " "$shell" \
+	"           " "$wm_name\n" \
+	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+fi
 
 #pad="[13G"
 #cat << EOF
