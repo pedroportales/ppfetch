@@ -13,8 +13,9 @@ yay -Sy ppfetch-git
 
 If you're a Gentoo user, to install ppfetch, add the [GentooBR Overlay](https://github.com/gentoobr/overlay), and then run the following command:
 ```
-emerge -av ppfetch
+emerge -av '=app-misc/ppfetch-9999'
 ```
+you will also need to unmask the package.
 
 To install ppfetch in another distro, download the installer script:
 ```sh
