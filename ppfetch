@@ -20,8 +20,8 @@ NORMAL='\033[0m'
 
 pkgs() {
   #[ -e "/usr/bin/pkgmanager" ] && pkgs="$PURPLE pkgs:$NORMAL $(command to count packages.)"
-	[ -e "/usr/bin/emerge" ] && pkgs="$PURPLE pkgs:$NORMAL $(printf '%s\n' /var/db/pkg/*/*/ | wc -l)" # emerge portage
-	[ -e "/usr/bin/pacman" ] && pkgs="$PURPLE pkgs:$NORMAL $(pacman -Q | wc -l)" # pacman
+  [ -e "/usr/bin/emerge" ] && pkgs="$PURPLE pkgs:$NORMAL $(printf '%s\n' /var/db/pkg/*/*/ | wc -l)" # emerge portage
+  [ -e "/usr/bin/pacman" ] && pkgs="$PURPLE pkgs:$NORMAL $(pacman -Q | wc -l)" # pacman
   [ -e "/usr/bin/apt" ] && pkgs="$PURPLE pkgs:$NORMAL $(dpkg --list | wc -l)" # apt dpkg
   [ -e "/usr/bin/dnf "] && pkgs="$PURPLE pkgs:$NORMAL $(dnf repolist | wc -l)" # dnf
 }
