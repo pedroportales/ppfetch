@@ -26,7 +26,7 @@ pkgs() {
   [ -e "/usr/bin/rpm " ] && pkgs="$PURPLE pkgs:$NORMAL $(rpm -qa | wc -l)" # rpm dnf yum
   [ -e "/usr/bin/apk" ] && pkgs="$PURPLE pkgs:$NORMAL $(apk list | wc -l)" # apk
   [ -e "/usr/bin/xbps-query" ] && pkgs="$PURPLE pkgs:$NORMAL $(xbps-query -l | wc -l)" # xbps
-  
+  [ -e "/usr/sbin/pkg_info" ] && pkgs="$PURPLE pkgs:$NORMAL $(pkg_info -mz | wc -l)" # pkg FreeBSD and OpenBSD
 }
 pkgs
 
