@@ -24,8 +24,3 @@ To install ppfetch in another distro, download the installer script:
 curl https://raw.githubusercontent.com/pedroportales/ppfetch/main/install.sh | sh
 ```
 Thanks for use ppfetch!
-
-If you want make a donation, this is my Monero Wallet: `8BmkJPyb9Gca1BjgVyDwesYxUidcfRUt99RAp8QdtF7K35pobg8qy9UcFMXecMpxTVXcJo22PKJFTVQSzvPoxQBvJ1LykHJ`
-
-![](monero-wallet.png)
-
