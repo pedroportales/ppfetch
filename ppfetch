@@ -42,14 +42,14 @@ while [ "$((i+=1))" -lt "$chars" ]; do
 	line="${line}─"
 done
 
-# get a value between 1 and 2
-randomv=$(shuf -i 1-2 -n 1)
+# get random value from PID
+randomv=$(($$%2))
 os="$RED os:$NORMAL $PRETTY_NAME"
 kernel="$BLUE kernel:$NORMAL $(uname -r)"
 shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
 wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
-if [ $randomv = 2 ];then
+if [ $randomv = 0 ];then
 printf "%s %b\n" \
 	"           " "$host" \
 	"  __   __  " " $line" \
