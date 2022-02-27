@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 . /etc/os-release
 
-# Taken fron pfetch
-if `xprop -version > /dev/null 2>&1` ; then
+# Taken from pfetch
+if xprop -version > /dev/null 2>&1; then
 	id=$(xprop -root -notype _NET_SUPPORTING_WM_CHECK)
 	id=${id##* }
 	wm=$(xprop -id "$id" -notype -len 25 -f _NET_WM_NAME 8t)
