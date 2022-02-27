@@ -53,26 +53,45 @@ shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
 wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
 if [ $randomv = 0 ];then
-printf "%s %b\n" \
-	"           " "$host" \
-	"  __   __  " " $line" \
-	" (  \,/  ) "  "$os" \
-	"  \_ | _/  "  "$kernel" \
-	"  (_/ \_)  " "$pkgs" \
-	"           " "$shell" \
-	"           " "$wm_name\n" \
-	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+ART="\
+           
+  __   __  
+ (  \,/  ) 
+  \_ | _/  
+  (_/ \_)  
+           
+           "
 else
-	printf "%s %b\n" \
-	"           " "$host" \
-	"   (\_/)   " " $line" \
-	" __(. .)__ " "$os" \
-	" \__|_|__/ " "$kernel" \
-	"    / \    " "$pkgs" \
-	"           " "$shell" \
-	"           " "$wm_name\n" \
-	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+ART="\
+           
+   (\_/)   
+ __(. .)__ 
+ \__|_|__/ 
+    / \    
+           
+           "
 fi
+
+(
+  IFS=''
+  set --
+  while read -r ARTLINE <&3; read -r INFOLINE <&4; do
+    set -- "$@" "$ARTLINE" "$INFOLINE"
+  done 3<<EOA 4<<EOB
+$ART
+EOA
+$host
+ $line
+$os
+$kernel
+$pkgs
+$shell
+$wm_name\\n
+Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL
+EOB
+
+  exec printf '%s %b\n' "$@"
+)
 
 #pad="[13G"
 #cat << EOF
