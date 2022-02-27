@@ -22,7 +22,7 @@ pkgs() {
   #[ -e "/usr/bin/pkgmanager" ] && pkgs="$PURPLE pkgs:$NORMAL $(command to count packages.)"
   [ -e "/usr/bin/emerge" ] && pkgs="$PURPLE pkgs:$NORMAL $(printf '%s\n' /var/db/pkg/*/*/ | wc -l)" # emerge portage
   [ -e "/usr/bin/pacman" ] && pkgs="$PURPLE pkgs:$NORMAL $(pacman -Q | wc -l)" # pacman
-  [ -e "/usr/bin/apt" ] && pkgs="$PURPLE pkgs:$NORMAL $(dpkg --list | wc -l)" # apt dpkg
+  [ -e "/usr/bin/dpkg" ] && pkgs="$PURPLE pkgs:$NORMAL $(dpkg --list | wc -l)" # apt dpkg
   [ -e "/usr/bin/rpm " ] && pkgs="$PURPLE pkgs:$NORMAL $(rpm -qa | wc -l)" # rpm dnf yum
   [ -e "/usr/bin/apk" ] && pkgs="$PURPLE pkgs:$NORMAL $(apk list | wc -l)" # apk
   [ -e "/usr/bin/xbps-query" ] && pkgs="$PURPLE pkgs:$NORMAL $(xbps-query -l | wc -l)" # xbps
