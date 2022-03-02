@@ -28,7 +28,8 @@ pkgs="$PURPLE pkgs:$NORMAL $(
     has rpm        && rpm -qa # rpm dnf yum
     has apk        && apk list # apk
     has xbps-query && xbps-query -l # xbps
-    has pkg_info   && pkg_info -mz # pkg FreeBSD and OpenBSD
+    has pkg_info   && pkg_info -mz # pkg, OpenBSD
+    has pkg        && printf '%s\n' /var/db/pkg/* # pkg, FreeBSD
     has flatpak    && flatpak list # flatpak
   } | wc -l
 )"
