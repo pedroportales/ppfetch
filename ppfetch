@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 . /etc/os-release
 
-# Taken fron pfetch
-if `xprop -version > /dev/null 2>&1` ; then
+# Taken from pfetch
+if xprop -version > /dev/null 2>&1; then
 	id=$(xprop -root -notype _NET_SUPPORTING_WM_CHECK)
 	id=${id##* }
 	wm=$(xprop -id "$id" -notype -len 25 -f _NET_WM_NAME 8t)
@@ -18,17 +18,21 @@ BLUE='\033[34;01m'
 PURPLE='\033[35m'
 NORMAL='\033[0m'
 
-pkgs() {
-  #[ -e "/usr/bin/pkgmanager" ] && pkgs="$PURPLE pkgs:$NORMAL $(command to count packages.)"
-  [ -e "/usr/bin/emerge" ] && pkgs="$PURPLE pkgs:$NORMAL $(printf '%s\n' /var/db/pkg/*/*/ | wc -l)" # emerge portage
-  [ -e "/usr/bin/pacman" ] && pkgs="$PURPLE pkgs:$NORMAL $(pacman -Q | wc -l)" # pacman
-  [ -e "/usr/bin/dpkg" ] && pkgs="$PURPLE pkgs:$NORMAL $(dpkg --list | wc -l)" # apt dpkg
-  [ -e "/usr/bin/rpm " ] && pkgs="$PURPLE pkgs:$NORMAL $(rpm -qa | wc -l)" # rpm dnf yum
-  [ -e "/usr/bin/apk" ] && pkgs="$PURPLE pkgs:$NORMAL $(apk list | wc -l)" # apk
-  [ -e "/usr/bin/xbps-query" ] && pkgs="$PURPLE pkgs:$NORMAL $(xbps-query -l | wc -l)" # xbps
-  [ -e "/usr/sbin/pkg_info" ] && pkgs="$PURPLE pkgs:$NORMAL $(pkg_info -mz | wc -l)" # pkg FreeBSD and OpenBSD
-}
-pkgs
+pkgs="$PURPLE pkgs:$NORMAL $(
+  has() { [ -x "$(command -v "$1")" ]; }
+  {
+   #has pkgmanager && pkgmanager list-packages
+    has emerge     && printf '%s\n' "${EPREFIX}"/var/db/pkg/*/* # emerge portage
+    has pacman     && pacman -Q # pacman
+    has dpkg       && dpkg --list # apt dpkg
+    has rpm        && rpm -qa # rpm dnf yum
+    has apk        && apk list # apk
+    has xbps-query && xbps-query -l # xbps
+    has pkg_info   && pkg_info -mz # pkg, OpenBSD
+    has pkg        && printf '%s\n' /var/db/pkg/* # pkg, FreeBSD
+    has flatpak    && flatpak list # flatpak
+  } | wc -l
+)"
 
 # Set USER and HOSTNAME for non-bash shells
 : "${USER=$(id -un)}${HOSTNAME=$(uname -n)}"
@@ -42,34 +46,53 @@ while [ "$((i+=1))" -lt "$chars" ]; do
 	line="${line}─"
 done
 
-# get a value between 1 and 2
-randomv=$(shuf -i 1-2 -n 1)
+# get random value from PID
+randomv=$(($$%2))
 os="$RED os:$NORMAL $PRETTY_NAME"
 kernel="$BLUE kernel:$NORMAL $(uname -r)"
 shell="$YELLOW shell:$NORMAL ${SHELL##*/}"
 wm_name="$GREEN wm:$NORMAL ${wm:-none}"
 
-if [ $randomv = 2 ];then
-printf "%s %b\n" \
-	"           " "$host" \
-	"  __   __  " " $line" \
-	" (  \,/  ) "  "$os" \
-	"  \_ | _/  "  "$kernel" \
-	"  (_/ \_)  " "$pkgs" \
-	"           " "$shell" \
-	"           " "$wm_name\n" \
-	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+if [ $randomv = 0 ];then
+ART="\
+           
+  __   __  
+ (  \,/  ) 
+  \_ | _/  
+  (_/ \_)  
+           
+           "
 else
-	printf "%s %b\n" \
-	"           " "$host" \
-	"   (\_/)   " " $line" \
-	" __(. .)__ " "$os" \
-	" \__|_|__/ " "$kernel" \
-	"    / \    " "$pkgs" \
-	"           " "$shell" \
-	"           " "$wm_name\n" \
-	"" "Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL"
+ART="\
+           
+   (\_/)   
+ __(. .)__ 
+ \__|_|__/ 
+    / \    
+           
+           "
 fi
+
+(
+  IFS=''
+  set --
+  while read -r ARTLINE <&3; read -r INFOLINE <&4; do
+    set -- "$@" "$ARTLINE" "$INFOLINE"
+  done 3<<EOA 4<<EOB
+$ART
+EOA
+$host
+ $line
+$os
+$kernel
+$pkgs
+$shell
+$wm_name\\n
+Talking is$GREEN easy$NORMAL, show me the$RED code$NORMAL
+EOB
+
+  exec printf '%s %b\n' "$@"
+)
 
 #pad="[13G"
 #cat << EOF
