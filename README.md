@@ -1,6 +1,8 @@
 <h1 align="center">ppfetch - Info script written in Shell Script.</h1>
-
-![a](https://img.shields.io/aur/license/ppfetch-git) ![AUR version](https://img.shields.io/aur/version/ppfetch-git)
+<p align=center>
+<img alt="GitHub License" src="https://img.shields.io/github/license/pedroportales/ppfetch?label=license">
+<img alt="Commits since last tag" src="https://img.shields.io/github/commits-since/pedroportales/ppfetch/latest">
+</p>
 
 ## What's ppfetch?
 The ppfetch was created to be a simple, basic, and posix fetch, you don't need a config file to customize ppfetch, or a handbook to use it. It's in your principle, it still has a long way to go to make it the friendly fetch I want it to become. It's a libre software, write your changes, make it your, or make a pull request and become a contributor to the project. You can create issues to contribute to the project too.
