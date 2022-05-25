@@ -1,16 +1,19 @@
 #include <unistd.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <stdlib.h>
-#include <limits.h>
+#include <sys/utsname.h>
 
 int main(void) {
-  char hostname[HOST_NAME_MAX + 1];
+  struct utsname unameData;
+  uname(&unameData);
   char *user = getlogin();
-  gethostname(hostname, HOST_NAME_MAX + 1);
-
-  printf("%s@%s\n", user, hostname);
-
-  return EXIT_SUCCESS;
+  //  char kernel_name = uname(&os);
+  printf("%s@%s\n", user, unameData.nodename);
+  printf("system name = %s\n", unameData.sysname);
+  printf("release = %s\n", unameData.release);
+  printf("version = %s\n", unameData.version);
+  printf("machine = %s\n", unameData.machine);
+  
+  return 0;
 }
 
