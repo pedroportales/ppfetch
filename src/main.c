@@ -7,17 +7,17 @@ int main(void) {
   uname(&unameData);
   char *shell = getenv("SHELL");
   char *user = getenv("USER");
-  char *systemname = getenv("PRETTY_NAME");
 
   // distro name
-  /*  FILE *fp;
+  FILE *fp;
   char distroname[20];
   fp = popen("lsb_release -ds", "r");
   fgets(distroname, 20, fp);
-  pclose(fp);*/
+  pclose(fp);
   
   printf("%s@%s\n", user, unameData.nodename);
-  printf("system ~ %s\n", systemname);
+  printf("----------------\n");
+  printf("system ~ %s\n", distroname);
   printf("kernel ~ %s %s\n", unameData.sysname, unameData.release);
   printf("arch ~ %s\n", unameData.machine);
   printf("shell ~ %s\n", shell);
