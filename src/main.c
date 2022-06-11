@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/utsname.h>
 #include <string.h>
+#include <sys/utsname.h>
 
-int main(void) {
+int main() {
   struct utsname unameData; // machine and kernel data
   uname(&unameData);
   char *shell = strrchr(getenv("SHELL"), '/');
   char *user = getenv("USER");
-  char *ds = getenv("DESKTOP_SESSION");
+  char *wm_name = getenv("XDG_CURRENT_DESKTOP");
 
   // Getting the OS - thx redfetch
   char line[100];
@@ -32,7 +32,7 @@ int main(void) {
   printf("sys ~ %s\n", distroname);
   printf("ker ~ %s %s\n", unameData.sysname, unameData.release);
   printf("sh  ~ %s\n", shell+1);
-  printf("de  ~ %s\n", ds);
+  printf("wm  ~ %s\n", wm_name);
   
   return 0;
 }
